@@ -20,6 +20,13 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService empService;
 	
+	@GetMapping("")
+	public String displayEmployees(Model model) {
+		List<EmployeeJpaEntity> lstEmployees = empService.findAll();
+		model.addAttribute("employees", lstEmployees);
+		return "employees/list-employees";
+	}
+	
 	@GetMapping("/new")
 	public String displayEmployeeForm(Model model) {
 		EmployeeJpaEntity aEmployee = new EmployeeJpaEntity();
