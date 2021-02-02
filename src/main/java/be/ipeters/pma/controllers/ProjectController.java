@@ -18,9 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/projects")
 public class ProjectController {
 	
-	@Autowired
-	ProjectRepository proRepo;
+//	@Autowired
+	private final ProjectRepository proRepo;
 	
+	public ProjectController(ProjectRepository proRepo) {
+		super();
+		this.proRepo = proRepo;
+	}
+
 	@GetMapping("/new")
 	public String displayProjectForm(Model model) {
 		ProjectJpaEntity aProject = new ProjectJpaEntity();
@@ -37,7 +42,7 @@ public class ProjectController {
 		return "redirect:/projects/new";
 	}
 	
-	@GetMapping("/list")
+	@GetMapping({"","/list"})
 	public String displayListProjects(Model model) {
 		List<ProjectJpaEntity> lstProjects = proRepo.findAll();
 		model.addAttribute("projects", lstProjects);

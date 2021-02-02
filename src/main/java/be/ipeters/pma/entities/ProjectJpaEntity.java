@@ -1,11 +1,15 @@
 package be.ipeters.pma.entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import be.ipeters.pma.employee.domain.persistence.jpa.entity.EmployeeJpaEntity;
 import lombok.Data;
 
 @Data
@@ -17,8 +21,9 @@ public class ProjectJpaEntity {
 	private long projectId;
 	private String name;
 	private String stage; // NOT STARTED, complete, in progress
-	
 	private String description;
+	@OneToMany(mappedBy="theProject")
+	private List<EmployeeJpaEntity> employees;
 
 	public long getProjectId() {
 		return projectId;
@@ -30,6 +35,14 @@ public class ProjectJpaEntity {
 
 	public String getName() {
 		return name;
+	}
+
+	public List<EmployeeJpaEntity> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(List<EmployeeJpaEntity> employees) {
+		this.employees = employees;
 	}
 
 	public void setName(String name) {
@@ -53,14 +66,12 @@ public class ProjectJpaEntity {
 	}
 
 	public ProjectJpaEntity(String name, String stage, String description) {
-		super();
 		this.name = name;
 		this.stage = stage;
 		this.description = description;
 	}
 
 	public ProjectJpaEntity() {
-		super();
 	}
 	
 	

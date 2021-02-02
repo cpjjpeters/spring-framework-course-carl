@@ -11,4 +11,6 @@ public interface EmployeeRepository extends CrudRepository<EmployeeJpaEntity, Lo
 	@Override
 	public List<EmployeeJpaEntity> findAll();
 
+	public EmployeeJpaEntity findByEmployeeId(long id);
+
 }

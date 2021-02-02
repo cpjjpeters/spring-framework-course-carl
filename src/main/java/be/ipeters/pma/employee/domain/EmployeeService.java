@@ -28,6 +28,17 @@ public class EmployeeService {
 		return empRepo.findAll();
 	}
 
+//	public List<EmployeeProject> employeeProjects() {
+//		return empRepo.employeeProjects();
+//	}
+
+
+	public EmployeeJpaEntity findByEmployeeId(long theId) {
+		// TODO Auto-generated method stub
+		return empRepo.findByEmployeeId(theId);
+	}
+
+
 	public void delete(EmployeeJpaEntity theEmp) {
 		empRepo.delete(theEmp);
 		

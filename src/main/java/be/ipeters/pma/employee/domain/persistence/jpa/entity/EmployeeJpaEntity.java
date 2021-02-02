@@ -4,7 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import be.ipeters.pma.entities.ProjectJpaEntity;
 
 @Entity
 @Table(name="EMPLOYEE")
@@ -16,6 +20,16 @@ public class EmployeeJpaEntity {
 	private String firstName;
 	private String lastName; 
 	private String email;
+	@ManyToOne
+	@JoinColumn(name="project_id")
+	private ProjectJpaEntity theProject;
+	
+	public ProjectJpaEntity getTheProject() {
+		return theProject;
+	}
+	public void setTheProject(ProjectJpaEntity theProject) {
+		this.theProject = theProject;
+	}
 	public long getEmployeeId() {
 		return employeeId;
 	}
@@ -41,10 +55,8 @@ public class EmployeeJpaEntity {
 		this.email = email;
 	}
 	public EmployeeJpaEntity() {
-		super();
 	}
 	public EmployeeJpaEntity(String firstName, String lastName, String email) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

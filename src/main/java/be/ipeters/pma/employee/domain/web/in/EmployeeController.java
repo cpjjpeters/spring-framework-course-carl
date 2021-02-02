@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import be.ipeters.pma.employee.domain.EmployeeService;
 import be.ipeters.pma.employee.domain.persistence.jpa.entity.EmployeeJpaEntity;
@@ -17,9 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/employees")
 public class EmployeeController {
 	
-	@Autowired
-	EmployeeService empService;
+	private final EmployeeService empService;
 	
+	public EmployeeController(EmployeeService empService) {
+		this.empService = empService;
+	}
+
 	@GetMapping("")
 	public String displayEmployees(Model model) {
 		List<EmployeeJpaEntity> lstEmployees = empService.findAll();
@@ -50,4 +54,21 @@ public class EmployeeController {
 		return "employees/list-employees";
 	}
 
+	@GetMapping("/update")
+	public String displayEmployeeUpdateForm(@RequestParam("id") long theId, Model model) {
+		
+		EmployeeJpaEntity theEmp = empService.findByEmployeeId(theId);
+		
+		model.addAttribute("employee", theEmp);
+		
+		
+		return "employees/new-employee";
+	}
+	
+	@GetMapping("delete")
+	public String deleteEmployee(@RequestParam("id") long theId, Model model) {
+		EmployeeJpaEntity theEmp = empService.findByEmployeeId(theId);
+		empService.delete(theEmp);
+		return "redirect:/employees";
+	}
 }
